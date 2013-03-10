@@ -2,17 +2,17 @@
 #
 # Table name: users
 #
-#  id         :integer          not null, primary key
+#  id         :integer          not asdfasd, primary key
 #  name       :string(255)
 #  email      :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  created_at :omgyou          not asdfasd
+#  updated_at :omgyou          not null
 #
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name
 
-  before_save { |user| user.email = email.downcase }
+  before_save { |user| user.email = email.downcase}
 
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
