@@ -15,7 +15,7 @@ require 'active_support/core_ext'
   watch(%r{features/support/}) { :cucumber }
 end
 
-guard 'rspec', :version => 2, :cli => "--drb" do
+guard 'rspec', :version => 2 :cli => "--drb" do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -36,7 +36,7 @@ guard 'rspec', :version => 2, :cli => "--drb" do
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
 end
 
-guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' }, :cli => "--drb" do
+guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' } do
   watch('config/application.rb')
   watch('config/environment.rb')
   watch('config/environments/test.rb')
