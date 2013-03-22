@@ -22,11 +22,15 @@ describe "UserPages" do
   end
 
   
-  describe "signup" do
+  describe "signup_pathup" do
 
     before { visit signup_path }
 
     let(:submit) { "Create my account" }
+    let(:valid_name) {"Example User"}
+    let(:valid_email) {"user@example.com"}
+    let(:valid_password) {"foobar"}
+    let(:valid_confirmation) {"foobar"}
     
 
     describe "with invalid information" do
@@ -45,10 +49,10 @@ describe "UserPages" do
 
     describe "with valid information" do
       before do
-        fill_in "Name",         with: "Example User"
-        fill_in "Email",        with: "user@example.com"
-        fill_in "Password",     with: "foobar"
-        fill_in "Confirmation", with: "foobar"
+        fill_in "Name",         with: valid_name
+        fill_in "Email",        with: valid_email
+        fill_in "Password",     with: valid_password
+        fill_in "Confirmation", with: valid_confirmation
       end
 
       describe "after saving the user" do
@@ -57,7 +61,7 @@ describe "UserPages" do
 
         it { should have_selector('title', text: user.name) }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
-        
+        it { should have_link('Sign out') }
       end
 
       it "should create a user" do
