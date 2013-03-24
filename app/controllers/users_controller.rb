@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :signed_in_user, only: [:index, :edit, :update]
-  before_filter :correct_user, only: [:index, :edit, :update]
+  before_filter :correct_user, only: [:edit, :update]
 
   	def new
   		@user = User.new
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
 	end
 
 	def index
-		@users = User.all
+    @users = User.paginate(page: params[:page])
 	end
 
   private
@@ -52,6 +52,6 @@ class UsersController < ApplicationController
 
     def correct_user
       @user = User.find(params[:id])
-	  redirect_to(root_path) unless current_user?(@user)
+	    redirect_to(root_path) unless current_user?(@user)
     end
 end
