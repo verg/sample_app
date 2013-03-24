@@ -4,11 +4,29 @@ describe "UserPages" do
 
 	subject { page }
 
+  describe "index" do
+    before do
+      sign_in FactoryGirl.create(:user)
+      FactoryGirl.create(:user, name: "Bob", email: "bob@example.com")
+      FactoryGirl.create(:user, name: "Ben", email: "ben@example.com")
+      visit user_path
+    end
+
+    it { should have_title("All users") }
+    it { should have_h1("All users") }
+
+    it "should list each user" do
+      User.all.each do |user|
+        page.should have_li(user.name)
+      end
+    end
+  end
+
   describe "signup page" do
   	before { visit signup_path }
   	
   	it { should have_h1('Sign up') }
-  	it { should have_title(full_title('Sign up'))}
+  	it { should have_title(full_title('Sign up')) }
   end
 
   describe "Profile page" do
@@ -25,10 +43,10 @@ describe "UserPages" do
     before { visit signup_path }
 
     let(:submit) { "Create my account" }
-    let(:valid_name) {"Example User"}
-    let(:valid_email) {"user@example.com"}
-    let(:valid_password) {"foobar"}
-    let(:valid_confirmation) {"foobar"}
+    let(:valid_name) { "Example User" }
+    let(:valid_email) { "user@example.com" }
+    let(:valid_password) { "foobar" }
+    let(:valid_confirmation) { "foobar" }
     
 
     describe "with invalid information" do

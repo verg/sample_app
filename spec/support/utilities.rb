@@ -42,6 +42,12 @@ RSpec::Matchers.define :have_h1 do |message|
   end
 end
 
+RSpec::Matchers.define :have_li do |message|
+  match do |page|
+    page.should have_selector('li', text: message)
+  end
+end
+
 RSpec::Matchers.define :have_success_message do |message|
   match do |page|
     page.should have_selector('div.alert.alert-success', text: message)
