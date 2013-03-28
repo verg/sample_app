@@ -17,11 +17,11 @@
 
       <%= f.label :password_confirmation, "Confirm Password" %>
       <%= f.password_field :password_confirmation %>
-
+      
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
 
     <%= gravatar_for @user %>
-    <a href="http://gravatar.com/emails">change</a>
+    <%= link_to image_tag("change"), "http://gravatar.com/emails", target: '_blank' %>
   </div>
 </div>
