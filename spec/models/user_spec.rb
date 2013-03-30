@@ -34,11 +34,6 @@ describe User do
 	it { should_not be_admin }
 
 	describe "accessible attributes" do
-	# 	it "should not allow access to admin" do
-	# 		expect do
-	# 			@User.update_attributes(admin: true)
- # 			end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
- # 		end
  		it { should_not allow_mass_assignment_of(:admin) }
 	end	
 

@@ -30,25 +30,29 @@ describe "User pages" do
       end
     end
 
-        describe "delete links" do
+    describe "delete links" do
 
-          it { should_not have_link('delete') }
+      it { should_not have_link('delete') }
 
-          describe "as an admin user" do
-            let(:admin) { FactoryGirl.create(:admin) }
-            before do
-              sign_in admin
-              visit users_path
-            end
+      describe "as an admin user" do
+        let(:admin) { FactoryGirl.create(:admin) }
+        before do
+          sign_in admin
+          visit users_path
+        end
 
-            it { should have_link('delete', href: user_path(User.first)) }
-            it "should be able to delete another user" do
-               expect {click_link('delete') }.to change(User, :count).by(-1)
-            end
-            it { should_not have_link('delete', href: user_path(admin)) }
-          end
+        it { should have_link('delete', href: user_path(User.first)) }
+        it "should be able to delete another user" do
+           expect{ click_link('delete') }.to change(User, :count).by(-1)
+        end
+        it { should_not have_link('delete', href: user_path(admin)) }
+
+        it "should not be able to delete self as admin" do
+          expect{ delete user_path(admin) }.to_not change(User, :count).by(-1)
         end
       end
+    end
+  end
 
   describe "signup page" do
   	before { visit signup_path }
@@ -95,7 +99,7 @@ describe "User pages" do
         fill_in "Name",         with: valid_name
         fill_in "Email",        with: valid_email
         fill_in "Password",     with: valid_password
-        fill_in "Confirmation", with: valid_confirmation
+        fill_in "Confirm Password", with: valid_confirmation
       end
 
       describe "after saving the user" do
