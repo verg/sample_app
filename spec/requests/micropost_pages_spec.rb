@@ -40,4 +40,43 @@ describe "Micropost pages" do
       end
     end
   end
+
+  describe "Sidebar micropost count" do
+    before { visit root_path }
+
+    describe "with no microposts" do
+      it { should have_selector("span", content: "0 micropost") }
+    end
+
+    describe "with 1 micropost" do
+      before { FactoryGirl.create(:micropost, user: user) }
+
+      it { should have_selector("span", content: "1 micropost") }
+    end
+
+    describe "with 2 microposts" do
+      
+      before { FactoryGirl.create(:micropost, user: user) }
+      before { FactoryGirl.create(:micropost, user: user) }
+
+      it { should have_selector("span", content: "2 microposts") }
+    end
+
+    describe "pluralized count" do
+      
+      before { FactoryGirl.create(:micropost, user: user) }
+      before { FactoryGirl.create(:micropost, user: user) }
+    end
+  end
+
+  describe "pagination" do
+
+    before(:each) { 31.times { FactoryGirl.create(:micropost, user: user) } }
+    before { visit root_path }
+
+    it { should have_selector('div.pagination') }
+    it { should have_selector("li", :content => "Previous") }
+    it { should have_selector("a", :href => "/users/1?page=2", :content => "2") }
+    it { should have_selector("a", :href => "/users/1?page=2", :content => "Next") }
+  end
 end

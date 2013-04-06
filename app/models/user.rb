@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
     #this is preliminary. See "following users" for the full implementation
     Micropost.where("user_id = ?", id)    
   end
+  
   private
 
     def create_remember_token
