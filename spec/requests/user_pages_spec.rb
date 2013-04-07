@@ -77,7 +77,7 @@ describe "User pages" do
       it { should have_content(user.microposts.count) } 
     end
     
-        describe "follow/unfollow buttons" do
+    describe "follow/unfollow buttons" do
       let(:other_user) { FactoryGirl.create(:user) }
       before { sign_in user }
 
@@ -125,6 +125,17 @@ describe "User pages" do
           it { should have_selector('input', value: 'Follow') }
         end
       end
+    end
+
+    describe "follower/following counts" do
+      let(:other_user) { FactoryGirl.create(:user) }
+      before do
+        other_user.follow!(user)
+        visit user_path(other_user)
+      end 
+      
+      it { should have_link("1 following", href: following_user_path(other_user)) }
+      it { should have_link("0 followers", href: followers_user_path(other_user)) }  
     end
   end
 
